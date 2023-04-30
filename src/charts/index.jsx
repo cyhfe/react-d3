@@ -1,8 +1,8 @@
 import Rankings from "./Rankings"
-import ScatterplotD3Controlled from "./ScatterplotD3Controlled"
+import ScatterplotReactControlled from "./ScatterplotReactControlled"
 import BarChart from "./BarChart"
 import { css } from "@emotion/react"
-
+import ScatterplotD3Controlled from "./ScatterplotD3Controlled"
 const rowStyle = css`
   display: flex;
   margin-left: -10px;
@@ -36,6 +36,7 @@ function Charts() {
 
   return (
     <>
+      <ScatterplotReactControlled margin={margin} />
       <h1>Front-end Frameworks</h1>
       <div css={rowStyle}>
         <div css={getColStyle(9)}>
