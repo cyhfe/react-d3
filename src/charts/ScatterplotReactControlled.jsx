@@ -37,6 +37,12 @@ export default function ScatterplotD3Controlled({ margin }) {
             innerHeight={innerHeight}
             numberOfTicks={5}
           />
+          <Axis.Bottom
+            scale={xScale}
+            innerWidth={innerWidth}
+            innerHeight={innerHeight}
+            numberOfTicks={3}
+          />
           {data.map((d) => {
             return (
               <Circle

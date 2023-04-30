@@ -1,4 +1,5 @@
 import { css } from "@emotion/react"
+import { transition } from "d3"
 
 const textStyle = css`
   font-size: 12px;
@@ -7,7 +8,26 @@ const textStyle = css`
 
 function Top({ scale, innerWidth, innerHeight, label }) {}
 
-function Bottom({ scale, innerWidth, innerHeight, label }) {}
+function Bottom({ scale, innerWidth, innerHeight, label, numberOfTicks }) {
+  const ticks = scale.ticks(numberOfTicks)
+  console.log(ticks)
+  return (
+    <g transform={`translate(0, ${innerHeight})`}>
+      <line x1={0} y1={0} x2={innerWidth} y2={0} stroke={"#888b8d"} />
+
+      {ticks.map((tick) => {
+        return (
+          <g key={tick} transform={`translate(${scale(tick)}, 0)`}>
+            <text x={0} y={20} textAnchor="middle" css={textStyle}>
+              {tick}
+            </text>
+            <line x1={0} y1={0} x2={0} y2={5} stroke={"#888b8d"} />
+          </g>
+        )
+      })}
+    </g>
+  )
+}
 
 function Left({ scale, innerWidth, innerHeight, label, numberOfTicks }) {
   const ticks = scale.ticks(numberOfTicks)
