@@ -3,6 +3,7 @@ import ChartContainer from "../chartsComponents/ChartContainer"
 import Card from "../components/Card"
 import { useDataContext } from "../App"
 import * as d3 from "d3"
+
 export default function ScatterplotD3Controlled({ margin }) {
   const width = 300
   const height = 245
@@ -47,7 +48,7 @@ export default function ScatterplotD3Controlled({ margin }) {
       .append("g")
       .attr("transform", `translate(0, ${innerHeight})`)
       .call(bottomAxis)
-  }, [data])
+  }, [data, colorScale, innerHeight, innerWidth])
 
   return (
     <Card>
