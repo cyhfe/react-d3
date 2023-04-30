@@ -24,12 +24,16 @@ function useDataContext() {
 function App() {
   const { data, isLoading, run } = useRequest()
 
+  const colorScale = data
+    ? d3.scaleOrdinal().domain(data.ids).range(d3.schemeTableau10)
+    : null
+
   useEffect(() => {
     run(d3.json("front_end_frameworks.json"))
   }, [run])
 
   return (
-    <DataContextProvider data={data}>
+    <DataContextProvider data={data} colorScale={colorScale}>
       <div
         css={css`
           margin-right: auto;
@@ -40,7 +44,7 @@ function App() {
         `}
       >
         {isLoading && "loading"}
-        {data && <Charts data={data} />}
+        {data && <Charts />}
       </div>
     </DataContextProvider>
   )

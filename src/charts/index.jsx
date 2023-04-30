@@ -33,6 +33,7 @@ const getColStyle = (n) => {
 
 function Charts() {
   const margin = { top: 30, right: 10, bottom: 50, left: 60 }
+
   return (
     <>
       <h1>Front-end Frameworks</h1>
