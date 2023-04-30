@@ -1,5 +1,5 @@
-import React from "react"
-
+import React, { useCallback } from "react"
+import useSafeDispatch from "./useSafeDIspatch"
 function reducer(state, action) {
   switch (action.type) {
     case "pendding": {
@@ -34,7 +34,7 @@ function reducer(state, action) {
   }
 }
 
-async function useRequest(
+function useRequest(
   initialState = {
     status: "idle",
     error: null,
@@ -42,27 +42,31 @@ async function useRequest(
   }
 ) {
   const [state, dispatch] = React.useReducer(reducer, initialState)
+  const safeDispatch = useSafeDispatch(dispatch)
   const { status, data, error } = state
 
-  function run(promise) {
-    promise.then(
-      (data) => {
-        dispatch({
-          type: "resolve",
-          payload: data,
-        })
-      },
-      (error) => {
-        dispatch({
-          type: "reject",
-          payload: error,
-        })
-      }
-    )
-  }
+  const run = useCallback(
+    function run(promise) {
+      promise.then(
+        (data) => {
+          safeDispatch({
+            type: "resolve",
+            payload: data,
+          })
+        },
+        (error) => {
+          safeDispatch({
+            type: "reject",
+            payload: error,
+          })
+        }
+      )
+    },
+    [safeDispatch]
+  )
 
   const isLoading = status === "pendding"
-  const isError = status !== null
+  const isError = error !== null
 
   return {
     status,
