@@ -25,6 +25,16 @@ function Bottom({ scale, innerWidth, innerHeight, label, numberOfTicks }) {
           </g>
         )
       })}
+      <text
+        textAnchor="middle"
+        alignmentBaseline="hanging"
+        x={0}
+        y={0}
+        transform={`translate(${innerWidth / 2}, 35)`}
+        css={textStyle}
+      >
+        {label}
+      </text>
     </g>
   )
 }
@@ -51,6 +61,17 @@ function Left({ scale, innerWidth, innerHeight, label, numberOfTicks }) {
           </g>
         )
       })}
+
+      <text
+        textAnchor="middle"
+        alignmentBaseline="baseline"
+        x={0}
+        y={0}
+        transform={`translate(-35, ${innerHeight / 2}) rotate(-90)`}
+        css={textStyle}
+      >
+        {label}
+      </text>
     </g>
   )
 }

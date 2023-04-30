@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react"
+import { useEffect, useRef } from "react"
 import ChartContainer from "../chartsComponents/ChartContainer"
 import Card from "../components/Card"
 import { useDataContext } from "../App"
@@ -36,12 +36,14 @@ export default function ScatterplotD3Controlled({ margin }) {
             innerWidth={innerWidth}
             innerHeight={innerHeight}
             numberOfTicks={5}
+            label={"Retention %"}
           />
           <Axis.Bottom
             scale={xScale}
             innerWidth={innerWidth}
             innerHeight={innerHeight}
             numberOfTicks={3}
+            label={"User Count"}
           />
           {data.map((d) => {
             return (
