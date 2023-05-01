@@ -8,7 +8,7 @@ import Axis from "../chartsComponents/Axis"
 
 export default function ScatterplotD3Controlled({ margin }) {
   const width = 300
-  const height = 245
+  const height = 400
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
 

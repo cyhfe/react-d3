@@ -6,7 +6,7 @@ import * as d3 from "d3"
 
 export default function ScatterplotD3Controlled({ margin }) {
   const width = 300
-  const height = 245
+  const height = 270
   const innerWidth = width - margin.left - margin.right
   const innerHeight = height - margin.top - margin.bottom
 

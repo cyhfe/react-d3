@@ -6,7 +6,7 @@ import Axis from "../chartsComponents/Axis"
 
 export default function BarChart({ margin }) {
   const width = 300
-  const height = 245
+  const height = 270
   const marginBottom = 85
 
   const innerWidth = width - margin.left - margin.right
