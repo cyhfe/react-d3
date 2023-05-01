@@ -84,7 +84,7 @@ export default function Rankings({ margin }) {
           {data.experience.map((d) => {
             return (
               <Curve
-                key={d.id}
+                key={"curve-" + d.id}
                 data={d[activeFilter]}
                 xScale={xScale}
                 yScale={yScale}
@@ -100,6 +100,7 @@ export default function Rankings({ margin }) {
             return (
               rank && (
                 <g
+                  key={d.id}
                   transform={`translate(-36, ${yScale(rank)})`}
                   css={css`
                     transition: transform 300ms cubic-bezier(0.5, 0, 0.5, 1);
@@ -123,6 +124,7 @@ export default function Rankings({ margin }) {
               return (
                 rank && (
                   <g
+                    key={d.id}
                     transform={`translate(36, ${yScale(rank)})`}
                     css={css`
                       transition: transform 300ms cubic-bezier(0.5, 0, 0.5, 1);
