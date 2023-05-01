@@ -3,8 +3,8 @@ import { createContext, useEffect, useContext } from "react"
 import { useRequest } from "./hooks/useRequest"
 import * as d3 from "d3"
 import Charts from "./charts"
-import { css } from "@emotion/react"
 import { useMemo } from "react"
+import { Global, css } from "@emotion/react"
 
 const DataContext = createContext()
 
@@ -21,6 +21,34 @@ function useDataContext() {
   return ctx
 }
 
+const globalStyle = [
+  css`
+    @import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=IBM+Plex+Mono:wght@400;700&display=swap");
+  `,
+  css`
+    html {
+      font-size: 62.5%;
+      -webkit-font-smoothing: antialiased;
+      box-sizing: border-box;
+    }
+    *,
+    ::after,
+    ::before {
+      box-sizing: inherit;
+    }
+    body {
+      color: red;
+      margin: 0 0 60px;
+      background-color: #f9fdff;
+      font-family: "IBM Plex Mono", monospace;
+      font-size: 1.6rem;
+      line-height: 1.4;
+      font-weight: 500;
+      color: #06273b;
+    }
+  `,
+]
+
 function App() {
   const { data, isLoading, run } = useRequest()
 
@@ -34,6 +62,7 @@ function App() {
 
   return (
     <DataContextProvider data={data} colorScale={colorScale}>
+      <Global styles={globalStyle} />
       <div
         css={css`
           margin-right: auto;
