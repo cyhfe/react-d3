@@ -1,4 +1,4 @@
-import React from "react"
+import React, { Fragment } from "react"
 import Card from "../components/Card"
 import ChartContainer from "../chartsComponents/ChartContainer"
 import * as d3 from "d3"
@@ -57,7 +57,7 @@ export default function Rankings({ margin }) {
                 transform={`translate(${xScale(y)} , ${innerHeight})`}
               >
                 <text
-                  transform="translate(0 , 20)"
+                  transform="translate(0 , 30)"
                   textAnchor="middle"
                   alignmentBaseline="hanging"
                   css={textStyle}
@@ -98,7 +98,7 @@ export default function Rankings({ margin }) {
                   key={"rank-start-" + rank}
                   textAnchor="end"
                   alignmentBaseline="middle"
-                  transform={`translate(-16, ${yScale(rank)})`}
+                  transform={`translate(-36, ${yScale(rank)})`}
                 >
                   {d.name}
                 </text>
@@ -115,7 +115,7 @@ export default function Rankings({ margin }) {
                     key={"rank-end-" + rank}
                     textAnchor="start"
                     alignmentBaseline="middle"
-                    transform={`translate(16, ${yScale(rank)})`}
+                    transform={`translate(36, ${yScale(rank)})`}
                   >
                     {d.name}
                   </text>
@@ -123,6 +123,43 @@ export default function Rankings({ margin }) {
               )
             })}
           </g>
+          {data.experience.map((d) => {
+            return (
+              <g key={"framework-percent-" + d.id}>
+                {d[activeFilter].map((f) => {
+                  return (
+                    f.rank && (
+                      <g
+                        key={"circle-percent-" + f.year}
+                        transform={`translate(${xScale(f.year)},${yScale(
+                          f.rank
+                        )})`}
+                      >
+                        <circle
+                          cx={0}
+                          cy={0}
+                          r={18}
+                          fill="#fff"
+                          stroke={colorScale(d.id)}
+                          strokeWidth={4}
+                        ></circle>
+                        <text
+                          textAnchor="middle"
+                          alignmentBaseline="central"
+                          css={css`
+                            font-size: 11px;
+                            font-weight: bold;
+                          `}
+                        >
+                          {f.percentage_question}
+                        </text>
+                      </g>
+                    )
+                  )
+                })}
+              </g>
+            )
+          })}
         </g>
       </ChartContainer>
     </Card>
