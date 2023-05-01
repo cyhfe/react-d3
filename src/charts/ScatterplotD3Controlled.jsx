@@ -17,7 +17,6 @@ export default function ScatterplotD3Controlled({ margin }) {
   const { colorScale } = ctx
 
   useEffect(() => {
-    console.log(data)
     const xScale = d3
       .scaleLinear()
       .domain([0, d3.max(data, (d) => d.user_count)])
