@@ -5,6 +5,7 @@ import * as d3 from "d3"
 import Curve from "../chartsComponents/Curve"
 import { useDataContext } from "../App"
 import { css } from "@emotion/react"
+import RankingFilters from "../interaction/RankingFilters"
 
 const rankingFilters = [
   { id: "satisfaction", label: "Satisfaction" },
@@ -44,6 +45,11 @@ export default function Rankings({ margin }) {
   return (
     <Card>
       <h2>Rankings</h2>
+      <RankingFilters
+        filters={rankingFilters}
+        setActiveFilter={setActiveFilter}
+        activeFilter={activeFilter}
+      />
       <ChartContainer
         width={width}
         height={height}
@@ -93,15 +99,21 @@ export default function Rankings({ margin }) {
             const rank = d[activeFilter][0].rank
             return (
               rank && (
-                <text
-                  stroke={colorScale(d.id)}
-                  key={"rank-start-" + rank}
-                  textAnchor="end"
-                  alignmentBaseline="middle"
+                <g
                   transform={`translate(-36, ${yScale(rank)})`}
+                  css={css`
+                    transition: transform 300ms cubic-bezier(0.5, 0, 0.5, 1);
+                  `}
                 >
-                  {d.name}
-                </text>
+                  <text
+                    stroke={colorScale(d.id)}
+                    key={"rank-start-" + rank}
+                    textAnchor="end"
+                    alignmentBaseline="middle"
+                  >
+                    {d.name}
+                  </text>
+                </g>
               )
             )
           })}
@@ -110,15 +122,21 @@ export default function Rankings({ margin }) {
               const rank = d[activeFilter][d[activeFilter].length - 1].rank
               return (
                 rank && (
-                  <text
-                    stroke={colorScale(d.id)}
-                    key={"rank-end-" + rank}
-                    textAnchor="start"
-                    alignmentBaseline="middle"
+                  <g
                     transform={`translate(36, ${yScale(rank)})`}
+                    css={css`
+                      transition: transform 300ms cubic-bezier(0.5, 0, 0.5, 1);
+                    `}
                   >
-                    {d.name}
-                  </text>
+                    <text
+                      stroke={colorScale(d.id)}
+                      key={"rank-end-" + rank}
+                      textAnchor="start"
+                      alignmentBaseline="middle"
+                    >
+                      {d.name}
+                    </text>
+                  </g>
                 )
               )
             })}
@@ -141,17 +159,18 @@ export default function Rankings({ margin }) {
                           r={18}
                           fill="#fff"
                           stroke={colorScale(d.id)}
-                          strokeWidth={4}
+                          strokeWidth={3}
                         ></circle>
                         <text
                           textAnchor="middle"
                           alignmentBaseline="central"
+                          fill="#374f5e"
                           css={css`
-                            font-size: 11px;
+                            font-size: 14px;
                             font-weight: bold;
                           `}
                         >
-                          {f.percentage_question}
+                          {Math.round(f.percentage_question)}
                         </text>
                       </g>
                     )
