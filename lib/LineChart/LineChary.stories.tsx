@@ -1,4 +1,6 @@
+export default { title: "Examples/LineChart" };
 import * as d3 from "d3";
+
 import {
   ComponentPropsWithoutRef,
   forwardRef,
