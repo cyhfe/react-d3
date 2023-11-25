@@ -1,6 +1,6 @@
 export default { title: "Examples/LineChart" };
 import * as d3 from "d3";
-
+import React from "react";
 import {
   ComponentPropsWithoutRef,
   forwardRef,
@@ -45,7 +45,6 @@ function LineChartDemo() {
         "aapl.csv",
         d3.autoType
       )) as d3.DSVParsedArray<Data>;
-      console.log(res);
       setData(res);
     })();
   }, []);
@@ -69,77 +68,93 @@ function LineChartDemo() {
   const path = lineGenerator(data);
 
   return (
-    <svg
-      width={width}
-      height={height}
-      viewBox={`0, 0, ${width}, ${height}`}
-      className="border"
-    >
-      <g transform={`translate(${marginLeft}, ${marginTop})`}>
-        <text x={0} y={-8} textAnchor="middle">
-          Daily close ($)
-        </text>
+    <div>
+      <svg
+        width={width}
+        height={height}
+        viewBox={`0, 0, ${width}, ${height}`}
+        className="border w-full"
+      >
+        <g transform={`translate(${marginLeft}, ${marginTop})`}>
+          <text x={0} y={-14} textAnchor="middle" className=" font-normal">
+            Daily close ($)
+          </text>
 
-        <text x={innerWidth + 8} y={innerHeight} alignmentBaseline="central">
-          Year
-        </text>
-        {/* axis-x */}
-        <g transform={`translate(0, ${innerHeight})`}>
-          <line x1={0} y1={0} x2={innerWidth} y2={0} stroke="steelblue" />
+          <text x={innerWidth + 14} y={innerHeight} alignmentBaseline="central">
+            Year
+          </text>
+          {/* axis-y */}
+          <g>
+            {ticksY.map((tick) => {
+              return (
+                <g key={tick}>
+                  <line
+                    x1={0}
+                    y1={y(tick)}
+                    x2={innerWidth}
+                    y2={y(tick)}
+                    className="stroke-slate-200"
+                  />
+                  <text
+                    x={-8}
+                    y={y(tick)}
+                    textAnchor="end"
+                    alignmentBaseline="central"
+                    className="text-xs"
+                  >
+                    {tick}
+                  </text>
+                </g>
+              );
+            })}
 
-          {ticksX.map((tick) => {
-            return (
-              <g key={tick.toString()}>
-                <line
-                  x1={x(tick)}
-                  y1={0}
-                  x2={x(tick)}
-                  y2={-innerHeight}
-                  stroke="steelblue"
-                />
-                <text
-                  x={x(tick)}
-                  textAnchor="middle"
-                  alignmentBaseline="before-edge"
-                >
-                  {d3.utcFormat("%Y")(tick)}
-                </text>
-              </g>
-            );
-          })}
+            <line
+              x1={0}
+              y1={0}
+              x2={0}
+              y2={innerHeight}
+              className="stroke-slate-600"
+            />
+          </g>
+
+          {/* axis-x */}
+          <g transform={`translate(0, ${innerHeight})`}>
+            {ticksX.map((tick) => {
+              return (
+                <g key={tick.toString()}>
+                  <line
+                    x1={x(tick)}
+                    y1={0}
+                    x2={x(tick)}
+                    y2={-innerHeight}
+                    className="stroke-slate-200"
+                  />
+                  <text
+                    x={x(tick)}
+                    y={8}
+                    textAnchor="middle"
+                    alignmentBaseline="before-edge"
+                    className="text-xs"
+                  >
+                    {d3.utcFormat("%Y")(tick)}
+                  </text>
+                </g>
+              );
+            })}
+
+            <line
+              x1={0}
+              y1={0}
+              x2={innerWidth}
+              y2={0}
+              className="stroke-slate-600"
+            />
+          </g>
+
+          {path && <path fill="none" className="stroke-sky-600" d={path} />}
         </g>
-        {/* axis-y */}
-        <g>
-          <line x1={0} y1={0} x2={0} y2={innerHeight} stroke="steelblue" />
-
-          {ticksY.map((tick) => {
-            return (
-              <g key={tick}>
-                <line
-                  x1={0}
-                  y1={y(tick)}
-                  x2={innerWidth}
-                  y2={y(tick)}
-                  stroke="steelblue"
-                />
-                <text
-                  x={-4}
-                  y={y(tick)}
-                  textAnchor="end"
-                  alignmentBaseline="central"
-                >
-                  {tick}
-                </text>
-              </g>
-            );
-          })}
-        </g>
-
-        {path && (
-          <path fill="none" stroke="steelblue" strokeWidth="1.5" d={path} />
-        )}
-      </g>
-    </svg>
+      </svg>
+    </div>
   );
 }
 
