@@ -1,4 +1,4 @@
-export default { title: "Examples/LineChart" };
+export default { title: "Examples/LineChart", tags: ["autodocs"] };
 import * as d3 from "d3";
 import React from "react";
 import {
@@ -8,25 +8,12 @@ import {
   useState,
 } from "react";
 
-interface SvgProps extends ComponentPropsWithoutRef<"svg"> {}
-const Svg = forwardRef<SVGSVGElement, SvgProps>(function Svg(
-  props: SvgProps,
-  forwardRef
-) {
-  const { children, ...rest } = props;
-  return (
-    <svg ref={forwardRef} {...rest}>
-      {children}
-    </svg>
-  );
-});
-
 interface Data {
   close: number;
   date: Date;
 }
 
-function LineChartDemo() {
+export function LineChartDemo() {
   const width = 928;
   const height = 500;
   const marginTop = 40;
@@ -157,5 +144,3 @@ function LineChartDemo() {
     </div>
   );
 }
-
-export { LineChartDemo };
