@@ -1,12 +1,8 @@
 export default { title: "Examples/LineChart", tags: ["autodocs"] };
 import * as d3 from "d3";
 import React from "react";
-import {
-  ComponentPropsWithoutRef,
-  forwardRef,
-  useEffect,
-  useState,
-} from "react";
+import { Svg } from "../Svg.tsx";
+import { useEffect, useState } from "react";
 
 interface Data {
   close: number;
@@ -55,92 +51,79 @@ export function LineChartDemo() {
   const path = lineGenerator(data);
 
   return (
-    <div>
-      <svg
-        width={width}
-        height={height}
-        viewBox={`0, 0, ${width}, ${height}`}
-        className="border w-full"
-      >
-        <g transform={`translate(${marginLeft}, ${marginTop})`}>
-          <text x={0} y={-14} textAnchor="middle" className=" font-normal">
-            Daily close ($)
-          </text>
+    <Svg
+      viewBox={`0, 0, ${width}, ${height}`}
+      marginLeft={marginLeft}
+      marginTop={marginTop}
+      className="border w-full"
+    >
+      <text x={0} y={-14} textAnchor="middle" className=" font-normal">
+        Daily close ($)
+      </text>
 
-          <text x={innerWidth + 14} y={innerHeight} alignmentBaseline="central">
-            Year
-          </text>
-          {/* axis-y */}
-          <g>
-            {ticksY.map((tick) => {
-              return (
-                <g key={tick}>
-                  <line
-                    x1={0}
-                    y1={y(tick)}
-                    x2={innerWidth}
-                    y2={y(tick)}
-                    className="stroke-slate-200"
-                  />
-                  <text
-                    x={-8}
-                    y={y(tick)}
-                    textAnchor="end"
-                    alignmentBaseline="central"
-                    className="text-xs"
-                  >
-                    {tick}
-                  </text>
-                </g>
-              );
-            })}
+      <text x={innerWidth + 14} y={innerHeight} alignmentBaseline="central">
+        Year
+      </text>
+      {/* axis-y */}
+      <g>
+        {ticksY.map((tick, i) => {
+          return (
+            <g key={tick}>
+              {i !== 0 && (
+                <line
+                  x1={0}
+                  y1={y(tick)}
+                  x2={innerWidth}
+                  y2={y(tick)}
+                  className="stroke-slate-200"
+                />
+              )}
+              <text
+                x={-8}
+                y={y(tick)}
+                textAnchor="end"
+                alignmentBaseline="central"
+                className="text-xs"
+              >
+                {tick}
+              </text>
+            </g>
+          );
+        })}
 
-            <line
-              x1={0}
-              y1={0}
-              x2={0}
-              y2={innerHeight}
-              className="stroke-slate-600"
-            />
-          </g>
+        <line x1={0} y1={0} x2={0} y2={innerHeight} className="stroke-black" />
+      </g>
 
-          {/* axis-x */}
-          <g transform={`translate(0, ${innerHeight})`}>
-            {ticksX.map((tick) => {
-              return (
-                <g key={tick.toString()}>
-                  <line
-                    x1={x(tick)}
-                    y1={0}
-                    x2={x(tick)}
-                    y2={-innerHeight}
-                    className="stroke-slate-200"
-                  />
-                  <text
-                    x={x(tick)}
-                    y={8}
-                    textAnchor="middle"
-                    alignmentBaseline="before-edge"
-                    className="text-xs"
-                  >
-                    {d3.utcFormat("%Y")(tick)}
-                  </text>
-                </g>
-              );
-            })}
+      {/* axis-x */}
+      <g transform={`translate(0, ${innerHeight})`}>
+        {ticksX.map((tick) => {
+          return (
+            <g key={tick.toString()}>
+              <line
+                x1={x(tick)}
+                y1={0}
+                x2={x(tick)}
+                y2={-innerHeight}
+                className="stroke-slate-200"
+              />
 
-            <line
-              x1={0}
-              y1={0}
-              x2={innerWidth}
-              y2={0}
-              className="stroke-slate-600"
-            />
-          </g>
+              <text
+                x={x(tick)}
+                y={8}
+                textAnchor="middle"
+                alignmentBaseline="before-edge"
+                className="text-xs"
+              >
+                {d3.utcFormat("%Y")(tick)}
+              </text>
+            </g>
+          );
+        })}
 
-          {path && <path fill="none" className="stroke-sky-600" d={path} />}
-        </g>
-      </svg>
-    </div>
+        <line x1={0} y1={0} x2={innerWidth} y2={0} className="stroke-black" />
+      </g>
+
+      {path && <path fill="none" className="stroke-sky-600" d={path} />}
+    </Svg>
   );
 }
